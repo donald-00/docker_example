@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  frontend:
+    image: nginx:alpine
+    container_name: nginx_content
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    ports:
+      - "80:80"
+
+  db:
+    image: mysql:5.7
+    container_name: databases
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+volumes:
+  db_data:
